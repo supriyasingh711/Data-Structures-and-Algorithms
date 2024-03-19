@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int findarrows(vector<vector<int>> arr,int n){
+    sort(begin(arr),end(arr));
+    vector<int> prev=arr[0];
+    int c=1;
+    for(int i=1;i<n;i++){
+        int currStartPoint=arr[i][0];
+        int currEndPoint=arr[i][1];
+        int prevStartPoint=prev[0];
+        int prevEndPoint=prev[1];
+        if(currStartPoint>prevEndPoint){
+            c++;
+            prev=arr[i];
+        }else{
+            prev[0]=max(currStartPoint,prevEndPoint);
+            prev[1]=min(currEndPoint,prevEndPoint);
+        }
+    }
+    return c;
+}
+
+int main(){
+    int n;
+    cout<<"enter the size of the array:";
+    cin>>n;
+    vector<vector<int>> arr;
+    for(int i=0;i<n;i++){
+        vector<int> temp;
+        for(int i=0;i<2;i++){
+            cout<<"enter the interval:";
+            int num;
+            cin>>num;
+            temp.push_back(num);
+        }
+        arr.push_back(temp);
+    }
+    cout<<"[";
+    for(int i=0;i<n;i++){
+        cout<<"[";
+        for(int j=0;j<2;j++){
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<"]";
+    }
+    cout<<"]";
+    cout<<findarrows(arr,n);
+}
