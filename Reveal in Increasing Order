@@ -1,0 +1,61 @@
+//Reveal in increasing order
+//{}
+//{2,3,5,7,11,13,17}
+//{2,13,3,11,5,17,7}
+
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> reveal(vector<int>& arr,int& n){
+    vector<int> ans(n,0);
+    sort(arr.begin(),arr.end());
+    bool skip=false;
+    int i=0,j=0;
+    while(i<n){
+        if(ans[j]==0){
+            if(skip==false){
+                ans[j]=arr[i++];
+            }
+            skip=!skip;
+        }
+        j=(j+1)%n;
+    }
+    
+    return ans;
+}
+//using queue
+vector<int> reveal2(vector<int>& arr,int& n){
+    vector<int> ans(n,0);
+    sort(arr.begin(),arr.end());
+    queue<int> q;
+    for(int i=0;i<n;i++){
+        q.push(i);
+    }
+    int i=0;
+    while(i<n){
+        ans[q.front()]=arr[i++];
+        q.pop();
+        q.push(q.front());
+        q.pop();
+        
+    }
+    return ans;
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+        
+    }
+    cout<<endl;
+    vector<int> ans=reveal2(arr,n);
+    for(int i=0;i<n;i++){
+        cout<<ans[i]<<" ";
+    }
+}
